@@ -42,7 +42,7 @@ export const setAuthHeader = (token, refreshToken) => {
     tokenRefreshService.defaults.headers.common['x-refresh-token'] =
       refreshToken
   _executeOnAllServices((service) => {
-    service.defaults.headers.common['x-auth-token'] = token
+    service.defaults.headers.common['authorization'] = token
     if (refreshToken)
       service.defaults.headers.common['x-refresh-token'] = refreshToken
   })

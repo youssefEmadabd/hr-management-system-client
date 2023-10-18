@@ -14,13 +14,13 @@ export function* login({ email, password }) {
       password: password,
     })
     setAuthHeader(
-      response.headers['x-auth-token'],
-      response.headers['x-refresh-token'],
+      response.data.token,
+      response.data.refreshToken,
     )
     yield put(
       AuthActions.loginSuccess(
-        response.headers['x-auth-token'],
-        response.headers['x-refresh-token'],
+        response.data.token,
+      response.data.refreshToken,
         response.data,
       ),
     )
@@ -36,12 +36,12 @@ export function* postLogin() {
   // window.location = '/user'
 }
 
-export function* getUser() {
+export function* getEmployee() {
   try {
     const { data } = yield call(employeeApiService.get, '/user')
-    yield put(AuthActions.getUserSuccess(data))
+    yield put(AuthActions.getEmployeeSuccess(data))
   } catch (e) {
-    yield put(AuthActions.getUserFail())
+    yield put(AuthActions.getEmployeeFail())
     handleError(e)
   }
 }
