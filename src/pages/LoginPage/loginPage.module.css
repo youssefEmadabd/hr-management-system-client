@@ -1,0 +1,52 @@
+  body {
+    font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  }
+  
+  .LoginPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #d9edff;
+  }
+  .LoginBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row-reverse;
+    max-width: 1000px;
+    background-color: white;
+    box-shadow: 0 0 40px rgba(0,0,0,0.16);
+    overflow: hidden;
+    margin: 0 auto;
+    border-radius: 12px;
+  }
+
+  .LoginFormButton {
+    width: 100%;
+  }
+  .IllustrationWrapper {
+    display: flex;
+    align-items: flex-end;
+    max-width: 800px;
+    min-height: 100%;
+    background-color: #fffdf2;
+  }
+  .IllustrationWrapper img {
+    display: block;
+    width: 100%;
+  }
+  @media screen and (max-width: 1023px) {
+    .LoginBox {
+      flex-direction: column;
+      box-shadow: none;
+    }
+    .IllustrationWrapper {
+      max-width: 100%;
+      min-height: auto;
+    }
+    #login-form {
+      max-width: 100%;
+    }
+  }
