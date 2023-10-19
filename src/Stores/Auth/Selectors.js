@@ -5,17 +5,13 @@
  *
  * Writing selectors is optional as it is not always necessary, we provide a simple example below.
  */
-
-const isLoginLoading = (state) => {
-  return state.secure.authState.loginLoading
-}
-
-const getUser = (state) => {
-  return state.secure.authState.user
-}
-
 const getToken = (state) => {
   return state.secure.authState.token
+}
+
+const isLoginLoading = (state) => {
+return state.secure.authState.loginLoading
+
 }
 
 const isLoggedIn = (state) => {
@@ -27,11 +23,10 @@ const getRefreshToken = (state) => {
 }
 
 const AuthSelectors = {
-  getUser,
-  isLoginLoading,
   getToken,
   getRefreshToken,
   isLoggedIn,
+  isLoginLoading
 }
 
 export default AuthSelectors

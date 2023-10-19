@@ -8,7 +8,6 @@ export const loginLoading = (state) => {
     loginLoading: true,
   }
 }
-
 export const loginResetLoading = (state) => {
   return {
     ...state,
@@ -35,16 +34,6 @@ export const loginError = (state) => {
   }
 }
 
-export const getUserSuccess = (state, { user }) => {
-  return {
-    ...state,
-    user: user,
-  }
-}
-
-export const getUserFail = (state) => {
-  return state
-}
 
 export const setAuthToken = (state, { token }) => {
   return {
@@ -61,9 +50,5 @@ export const reducer = createReducer(INITIAL_STATE, {
   [AuthTypes.LOGIN_RESET_LOADING]: loginResetLoading,
   [AuthTypes.LOGIN_SUCCESS]: loginSuccess,
   [AuthTypes.LOGIN_ERROR]: loginError,
-
   [AuthTypes.SET_AUTH_TOKEN]: setAuthToken,
-
-  [AuthTypes.GET_USER_SUCCESS]: getUserSuccess,
-  [AuthTypes.GET_USER_FAIL]: getUserFail,
 })

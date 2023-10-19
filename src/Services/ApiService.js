@@ -18,12 +18,12 @@ const DEFAULT_OPTIONS = {
 
 export const employeeApiService = axios.create({
   ...DEFAULT_OPTIONS,
-  baseURL: Config.API_URL + '/users',
+  baseURL: Config.API_URL + '/',
 })
 
 const tokenRefreshService = axios.create({
   ...DEFAULT_OPTIONS,
-  baseURL: Config.API_URL + '/refreshAccessToken',
+  baseURL: Config.API_URL + '/reset-token',
 })
 
 export function initApiService(_store) {
@@ -31,6 +31,7 @@ export function initApiService(_store) {
 }
 
 export function handleError(error) {
+  console.log(error)
   Notification.error(error.message)
 }
 /**
@@ -42,7 +43,7 @@ export const setAuthHeader = (token, refreshToken) => {
     tokenRefreshService.defaults.headers.common['x-refresh-token'] =
       refreshToken
   _executeOnAllServices((service) => {
-    service.defaults.headers.common['authorization'] = token
+    service.defaults.headers.Authorization = `Bearer ${token}`
     if (refreshToken)
       service.defaults.headers.common['x-refresh-token'] = refreshToken
   })
@@ -81,15 +82,15 @@ function _handleUnauthorizedRequests() {
     )
 
     service.interceptors.request.use(async (config) => {
-      config.headers.common['x-auth-token'] =
-        store.getState().secure.authState.token
-      config.headers.common['x-refresh-token'] =
-        store.getState().secure.authState.refreshToken
+      config.headers.Authorization =
+        `Bearer ${store.getState().secure.authState.token}`
+      config.headers['x-refresh-token'] =
+        `${store.getState().secure.authState.refreshToken}`
       if (
         store.getState().secure.authState.token !== null &&
-        config.baseURL !== Config.API_URL + '/auth'
+        config.baseURL !== Config.API_URL + '/reset-token'
       ) {
-        const [, payload] = config.headers.common['x-auth-token'].split('.')
+        const [, payload] = config.headers.Authorization.substring(7, config.headers.Authorization.length).split('.')
         const { exp: expires } = JSON.parse(base64.decode(payload))
         const now = Date.now()
         let expiry = expires * 1000
@@ -103,15 +104,15 @@ function _handleUnauthorizedRequests() {
               {},
               {
                 headers: {
-                  'x-auth-token': store.getState().secure.authState.token,
+                  Authorization: `Bearer ${store.getState().secure.authState.token}`,
                   'x-refresh-token':
                     store.getState().secure.authState.refreshToken,
                 },
               },
             )
-            config.headers.common['x-auth-token'] =
-              tokenResponse.headers['x-auth-token']
-            setAuthHeader(tokenResponse.headers['x-auth-token'])
+            config.headers.Authorization =
+              tokenResponse.data['token']
+            setAuthHeader( tokenResponse.data['token'])
           }
         } catch (error) {
           if (error && error.response) {

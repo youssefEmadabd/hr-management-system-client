@@ -1,16 +1,11 @@
 import { createActions } from 'reduxsauce'
 
 const { Types, Creators } = createActions({
-  login: ['email', 'password'],
-  loginLoading: null,
-  loginResetLoading: null,
+  login: ['username', 'password'],
   loginSuccess: ['token', 'refreshToken', 'user'],
+  loginResetLoading: null,
+  loginLoading:null,
   loginError: null,
-
-  getUser: null,
-  getUserSuccess: ['user'],
-  getUserFail: null,
-
   setAuthToken: ['token'],
   logout: null,
 })
