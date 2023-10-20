@@ -1,13 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState} from 'react'
 import { ListOfEmployee } from 'Components'
 import { connect } from 'react-redux'
 import EmployeeActions from 'Stores/Employee/Actions'
 import EmployeeSelectors from 'Stores/Employee/Selectors'
 import { Spinner } from 'Components'
 
-const Employees = ({ isLoading, EmployeesList, getEmployees, updateEmployees }) => {
-  useEffect(()=>getEmployees(),[]);
-  const handleDate = (listOfAttendance, id)=>{
+const Employees = ({
+  isLoading,
+  EmployeesList,
+  getEmployees,
+  updateEmployees,
+  isLoggedIn,
+}) => {
+  useEffect(() => getEmployees(), [])
+  const handleDate = (listOfAttendance, id) => {
     console.log(listOfAttendance, id)
     updateEmployees(listOfAttendance, id)
   }
@@ -27,7 +33,10 @@ const Employees = ({ isLoading, EmployeesList, getEmployees, updateEmployees }) 
         {isLoading ? (
           <Spinner />
         ) : (
-          <ListOfEmployee employees={EmployeesList} handleDateAdd={handleDate}/>
+          <ListOfEmployee
+            employees={EmployeesList}
+            handleDateAdd={handleDate}
+          />
         )}
       </div>
     </div>
@@ -37,7 +46,8 @@ const Employees = ({ isLoading, EmployeesList, getEmployees, updateEmployees }) 
 function mapDispatchToProps(dispatch) {
   return {
     getEmployees: () => dispatch(EmployeeActions.getEmployees()),
-    updateEmployees: (listOfAttendance, id) => dispatch(EmployeeActions.updateEmployees(listOfAttendance, id))
+    updateEmployees: (listOfAttendance, id) =>
+      dispatch(EmployeeActions.updateEmployees(listOfAttendance, id)),
   }
 }
 

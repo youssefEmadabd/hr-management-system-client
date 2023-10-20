@@ -25,6 +25,7 @@
 
   .LoginFormButton {
     width: 100%;
+    background-color: blue;
   }
   .IllustrationWrapper {
     display: flex;

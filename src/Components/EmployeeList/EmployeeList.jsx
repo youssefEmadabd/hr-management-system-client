@@ -7,12 +7,14 @@ const EmployeeList = ({ employees = [], handleDateAdd }) => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [currentDate, setCurrentDate] = useState('')
   const [currentId, setCurrentId] = useState('')
+  const [currentAttendanceList, setCurrentAttendanceList] = useState([])
   const showModal = (index) => {
     setIsModalOpen(true)
     setCurrentId(employees[index].id)
     setCurrentIndex(index)
   }
-  const showAttendanceModal = () => {
+  const showAttendanceModal = (employeeAttendance) => {
+    setCurrentAttendanceList(employeeAttendance)
     setIsAttendanceModalOpen(true)
   }
   const handleAttendanceModalOk = () => {
@@ -49,7 +51,7 @@ const EmployeeList = ({ employees = [], handleDateAdd }) => {
             </p>
           </div>
           <div className="flex-auto text-right px-4 py-2 m-2">
-            <Button type="primary" onClick={()=>showAttendanceModal()} ghost>
+            <Button type="primary" onClick={() => showAttendanceModal(employee.attendance)} ghost>
               {' '}
               Show attendance dates
             </Button>
@@ -60,37 +62,31 @@ const EmployeeList = ({ employees = [], handleDateAdd }) => {
               Select Attendance
             </Button>
           </div>
+          </div>
+      ))}
           <div>
-          <Modal
-            title="Select Attendance"
-            open={isModalOpen}
-            onOk={handleOk}
-            onCancel={handleCancel}
-          >
-            <DatePicker onChange={onChange} />
-          </Modal>
+            <Modal
+              title="Select Attendance"
+              open={isModalOpen}
+              onOk={handleOk}
+              onCancel={handleCancel}
+              okButtonProps={{style: { color: 'black' }}}
+            >
+              <DatePicker onChange={onChange} />
+            </Modal>
           </div>
           <Modal
             title="Attendance"
             open={isAttendanceModalOpen}
             onOk={handleAttendanceModalOk}
             onCancel={handleAttendanceModalCancel}
+            okButtonProps={{style: { color: 'black' }}}
           >
-            <List
-          itemLayout="horizontal"
-          dataSource={employee.attendance}
-          renderItem={(item, index) => (
-            <List.Item>
-              <List.Item.Meta
-                title={<p color='green'>Attended</p>}
-                description={item}
-              />
-            </List.Item>
-            )}
-            />
+             {currentAttendanceList.map((item, i)=>(
+              <p key={i}>{item}</p>
+             ))}
           </Modal>
-        </div>
-      ))}
+        
     </Fragment>
   )
 }

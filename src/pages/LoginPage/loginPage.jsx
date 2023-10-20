@@ -33,7 +33,7 @@ const Login = ({ isLoginLoading, login }) => {
           onFinishFailed={onFinishFailed}
         >
           <p className={Styles.FormTitle}>Welcome back</p>
-          <p>Login to the Dashboard</p>
+          <p>Login to Employees' Dashboard</p>
           <ArtDesignofReact.Form.Item
             name="username"
             rules={[{ required: true, message: 'Please input your username!' }]}
@@ -46,10 +46,6 @@ const Login = ({ isLoginLoading, login }) => {
             rules={[{ required: true, message: 'Please input your password!' }]}
           >
             <ArtDesignofReact.Input.Password placeholder="Password" />
-          </ArtDesignofReact.Form.Item>
-
-          <ArtDesignofReact.Form.Item name="remember" valuePropName="checked">
-            <ArtDesignofReact.Checkbox>Remember me</ArtDesignofReact.Checkbox>
           </ArtDesignofReact.Form.Item>
 
           <ArtDesignofReact.Form.Item>
