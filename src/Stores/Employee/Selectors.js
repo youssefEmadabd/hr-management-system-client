@@ -11,13 +11,13 @@ return state.main.employeeState.Loading
 
 }
 
-const getEmployees = (state) => {
+const EmployeesList = (state) => {
   return state.main.employeeState.EmployeeList
 }
 
-const AuthSelectors = {
+const EmployeeSelectors = {
   isLoading,
-  getEmployees
+  EmployeesList
 }
 
-export default AuthSelectors
+export default EmployeeSelectors

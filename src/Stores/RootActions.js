@@ -3,6 +3,7 @@ import { createActions } from 'reduxsauce'
 const { Types, Creators } = createActions({
   resetAllStores: null,
   resetSecureStore: null,
+  resetMainStore: null,
 })
 
 window.creators = Creators

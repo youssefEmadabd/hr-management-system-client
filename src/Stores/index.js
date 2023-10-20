@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import configureStore from './CreateStore'
 import rootSaga from '../Sagas'
 import { reducer as AuthReducer } from './Auth/Reducers'
-import { reducer as EmployeeReducer} from './Employee/Reducers'
+import { reducer as EmployeeReducer } from './Employee/Reducers'
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
 
 import { createMigrate, persistReducer } from 'redux-persist'
@@ -19,10 +19,10 @@ import {
 const mainPersistConfig = {
   key: 'main',
   storage: storage,
-  whitelist: [],
+  whitelist: ['employeeState'],
   version: MAIN_STORE_VERSION,
   migrate: createMigrate(mainStoreMigrations, { debug: false }),
-  timeout: 0, 
+  timeout: 0,
 }
 
 //TODO Investigate a secure store for the web
@@ -32,7 +32,7 @@ const securePersistConfig = {
   whitelist: ['authState'],
   version: SECURE_STORE_VERSION,
   migrate: createMigrate(secureStoreMigrations, { debug: false }),
-  timeout: 0, 
+  timeout: 0,
 }
 
 const reducer = () => {

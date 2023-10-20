@@ -12,21 +12,14 @@ import { initApiService } from 'Services/ApiService'
  */
 
 const store = (rootReducer, rootSaga) => {
-  const middleware = []
-  const enhancers = []
-
-  // Connect the sagas to the redux store
   const sagaMiddleware = createSagaMiddleware()
-  middleware.push(sagaMiddleware)
+  // Mount it on the Store
+  const store = createStore(rootReducer, applyMiddleware(sagaMiddleware))
 
-  enhancers.push(applyMiddleware(...middleware))
-
-  const store = createStore(rootReducer, compose(...enhancers))
+  // Then run the saga
+  sagaMiddleware.run(rootSaga)
   const persistor = persistStore(store)
   initApiService(store)
-
-  // Kick off the root saga
-  sagaMiddleware.run(rootSaga)
 
   return { store, persistor }
 }

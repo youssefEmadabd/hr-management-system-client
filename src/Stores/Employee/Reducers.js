@@ -16,18 +16,31 @@ export const Loading = (state) => {
   }
 }
 
-export const GetEmployeesSuccess = (state, { EmployeeList }) => {
+export const SetEmployeesSuccess = (state, {data}) => {
   return {
     ...state,
-    EmployeeList: EmployeeList,
+    EmployeeList: data,
+    Loading:false,
+ 
+ }
+}
+
+export const SetUpdateEmployeeSuccess = (state, {employee}) => {
+  console.log(employee)
+  let newEmployeeList = state.EmployeeList
+  const employeeIndex = newEmployeeList.findIndex(list => list.id === employee.id)
+  newEmployeeList[employeeIndex] = employee;
+  return{
+    ...state,
+    EmployeeList:newEmployeeList
   }
 }
 
 export const OnError = (state) => {
   return {
     ...state,
-    EmployeeList:[],
-    Loading:false,
+    EmployeeList: [],
+    Loading: false,
   }
 }
 /**
@@ -36,6 +49,7 @@ export const OnError = (state) => {
 export const reducer = createReducer(INITIAL_STATE, {
   [EmployeeTypes.LOADING]: Loading,
   [EmployeeTypes.RESET_LOADING]: ResetLoading,
-  [EmployeeTypes.GET_EMPLOYEES_SUCCESS]: GetEmployeesSuccess,
+  [EmployeeTypes.SET_EMPLOYEES_SUCCESS]: SetEmployeesSuccess,
   [EmployeeTypes.ON_ERROR]: OnError,
+  [EmployeeTypes.SET_UPDATE_EMPLOYEE_SUCCESS]:SetUpdateEmployeeSuccess,
 })

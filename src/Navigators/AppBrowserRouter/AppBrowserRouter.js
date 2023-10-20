@@ -1,15 +1,14 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { connect } from 'react-redux'
 import AuthSelectors from 'Stores/Auth/Selectors'
-import Login from 'pages/LoginPage/loginPage'
-import Employees from 'pages/Employees/Employees'
+import { Login, Employees } from 'pages'
 
 function AppBrowserRouter({ isLoggedIn }) {
   return (
     <BrowserRouter>
       <Routes>
       <Route path="/login"element={<Login/>} />
-      <Route path="/employee"element={<Employees/>} />
+      <Route path="/employees"element={<Employees/>} />
       </Routes>
     </BrowserRouter>
   )

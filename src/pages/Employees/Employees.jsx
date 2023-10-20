@@ -1,10 +1,16 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { ListOfEmployee } from 'Components'
 import { connect } from 'react-redux'
 import EmployeeActions from 'Stores/Employee/Actions'
+import EmployeeSelectors from 'Stores/Employee/Selectors'
+import { Spinner } from 'Components'
 
-const Employees = ({ isLoading, EmployeeList, getEmployees }) => {
-    getEmployees();
+const Employees = ({ isLoading, EmployeesList, getEmployees, updateEmployees }) => {
+  useEffect(()=>getEmployees(),[]);
+  const handleDate = (listOfAttendance, id)=>{
+    console.log(listOfAttendance, id)
+    updateEmployees(listOfAttendance, id)
+  }
   return (
     <div className="App">
       <div className="container mx-auto">
@@ -18,23 +24,26 @@ const Employees = ({ isLoading, EmployeeList, getEmployees }) => {
             </h5>
           </div>
         </div>
-        <ListOfEmployee Loading={isLoading} employees={EmployeeList}/>
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <ListOfEmployee employees={EmployeesList} handleDateAdd={handleDate}/>
+        )}
       </div>
     </div>
   )
 }
 
 function mapDispatchToProps(dispatch) {
-    return {
-        getEmployees: () => dispatch(EmployeeActions.getEmployees()),
-    }
+  return {
+    getEmployees: () => dispatch(EmployeeActions.getEmployees()),
+    updateEmployees: (listOfAttendance, id) => dispatch(EmployeeActions.updateEmployees(listOfAttendance, id))
   }
-  
-  const mapStateToProps = (state) => ({
-    isLoading: EmployeeActions.isLoading(state),
-    getEmployees: EmployeeActions.getEmployees(state)
-  })
-  
-  export default connect(mapStateToProps, mapDispatchToProps)(Employees)
-  
-  
+}
+
+const mapStateToProps = (state) => ({
+  isLoading: EmployeeSelectors.isLoading(state),
+  EmployeesList: EmployeeSelectors.EmployeesList(state),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Employees)
